@@ -10,9 +10,7 @@
     <style>
         :root {
             --primary-pink: #D93F66;
-            --primary-pink-hover: #B82E50;
             --bg-color: #FFF8F9;
-            --sidebar-bg: #FFFFFF;
             --text-dark: #1A1A1A;
             --text-light: #594A4E;
             --border-color: #E5D5D8;
@@ -23,36 +21,29 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        *:focus-visible { outline: 3px solid var(--primary-pink); outline-offset: 2px; }
         body { background-color: var(--bg-color); color: var(--text-dark); display: flex; min-height: 100vh; }
 
         /* Sidebar */
-        .sidebar { width: 260px; background: var(--sidebar-bg); border-right: 1px solid var(--border-color); padding: 24px; display: flex; flex-direction: column; position: fixed; height: 100vh; }
+        .sidebar { width: 260px; background: #FFF; border-right: 1px solid var(--border-color); padding: 24px; position: fixed; height: 100vh; }
         .logo-container { display: flex; align-items: center; gap: 12px; margin-bottom: 40px; }
         .logo-icon { color: var(--primary-pink); font-size: 28px; }
-        .logo-text h1 { font-size: 16px; font-weight: 700; line-height: 1.2; }
-        .logo-text p { font-size: 11px; color: var(--text-light); margin-top: 2px; }
-        .nav-menu { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-        .nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 8px; color: var(--text-light); text-decoration: none; font-weight: 500; font-size: 14px; cursor: pointer; }
+        .logo-text h1 { font-size: 16px; font-weight: 700; }
+        .nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 8px; color: var(--text-light); text-decoration: none; font-weight: 500; cursor: pointer; }
         .nav-item:hover, .nav-item.active { background-color: var(--status-high); color: var(--status-high-text); }
 
         /* Main Content */
         .main-content { flex: 1; margin-left: 260px; padding: 30px 40px; width: calc(100% - 260px); }
-        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .welcome-text h2 { font-size: 24px; font-weight: 600; }
-        .welcome-text p { font-size: 14px; color: var(--text-light); margin-top: 4px; }
-
+        header { margin-bottom: 30px; }
+        
         /* Action Cards */
         .action-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px; }
-        .action-card { background: white; border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; display: flex; align-items: center; gap: 16px; cursor: pointer; text-align: left; width: 100%; transition: transform 0.1s; }
-        .action-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .action-card { background: white; border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; display: flex; align-items: center; gap: 16px; cursor: pointer; text-align: left; width: 100%; transition: 0.2s; }
         .action-card.primary { background-color: var(--primary-pink); color: white; border: none; }
-        .action-icon { font-size: 24px; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background-color: var(--bg-color); color: var(--primary-pink); flex-shrink: 0; }
+        .action-icon { font-size: 24px; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background-color: var(--bg-color); color: var(--primary-pink); }
         .action-card.primary .action-icon { background-color: rgba(255, 255, 255, 0.2); color: white; }
 
         /* Table */
-        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-        .table-container { background: white; border-radius: 12px; border: 1px solid var(--border-color); overflow-x: auto; }
+        .table-container { background: white; border-radius: 12px; border: 1px solid var(--border-color); overflow-x: auto; margin-bottom: 30px; }
         table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
         th { background-color: #FAFAFA; padding: 14px 20px; font-size: 12px; color: var(--text-light); border-bottom: 1px solid var(--border-color); }
         td { padding: 16px 20px; font-size: 13px; border-bottom: 1px solid var(--border-color); }
@@ -60,22 +51,21 @@
         .status-high { background: var(--status-high); color: var(--status-high-text); }
         .status-low { background: var(--status-low); color: var(--status-low-text); }
 
+        /* Interactive Risk Section (Hidden by default) */
+        .risk-section { display: none; background: white; border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; margin-top: 20px; }
+        .risk-section.active { display: block; animation: fadeIn 0.5s; }
+        .combined-pattern { background: #FFF0F2; padding: 16px; border-radius: 8px; border: 1px dashed #F8D0D8; margin-top: 20px; text-align: center; color: var(--status-high-text); font-weight: 600; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
         /* Modal Form */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: 0.3s; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
         .modal-content { background: white; padding: 30px; border-radius: 16px; width: 90%; max-width: 500px; }
-        .modal-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
-        .close-btn { background: none; border: none; font-size: 24px; cursor: pointer; }
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; }
-        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; }
+        .form-group input { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; }
         .btn-submit { width: 100%; background: var(--primary-pink); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; }
-
-        @media (max-width: 768px) {
-            .sidebar { display: none; }
-            .main-content { margin-left: 0; width: 100%; padding: 15px; }
-            .action-cards { grid-template-columns: 1fr; }
-        }
     </style>
 </head>
 <body>
@@ -83,145 +73,150 @@
     <aside class="sidebar">
         <div class="logo-container">
             <i class="fa-solid fa-baby-carriage logo-icon"></i>
-            <div class="logo-text">
-                <h1>Mother-Baby Bridge</h1>
-                <p>Clinical Decision Support</p>
-            </div>
+            <div class="logo-text"><h1>Mother-Baby Bridge</h1></div>
         </div>
-        <nav>
-            <ul class="nav-menu">
-                <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i> Dashboard</a>
-                <a href="#" class="nav-item" onclick="openModal()"><i class="fa-solid fa-plus-circle"></i> New Assessment</a>
-            </ul>
-        </nav>
+        <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i> Dashboard</a>
     </aside>
 
     <main class="main-content">
         <header>
-            <div class="welcome-text">
-                <h2>Welcome, Dr. Meera</h2>
-                <p>Review patient assessments and make informed referrals.</p>
-            </div>
+            <h2>Welcome, Dr. Meera</h2>
+            <p>Review patient assessments and make informed referrals.</p>
         </header>
 
         <section class="action-cards">
             <button class="action-card primary" onclick="openModal()">
                 <div class="action-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
-                <div class="action-text">
-                    <h3>Upload Patient Reports</h3>
-                    <p>Lab • Ultrasound • Genetics</p>
-                </div>
+                <div><h3>Upload Patient Data</h3><p>Click to run AI Risk Analysis</p></div>
             </button>
         </section>
 
+        <!-- Patient Table -->
         <section>
-            <div class="section-header">
-                <h2 style="font-size: 18px;">Recent Patients</h2>
-            </div>
+            <h2 style="font-size: 18px; margin-bottom: 10px;">Recent Patients</h2>
             <div class="table-container">
-                <table id="patientTable">
+                <table>
                     <thead>
-                        <tr>
-                            <th>Patient Name</th>
-                            <th>Gestational Age</th>
-                            <th>Risk Status</th>
-                            <th>Date Added</th>
-                        </tr>
+                        <tr><th>Patient</th><th>Gestational Age</th><th>Risk Status</th></tr>
                     </thead>
                     <tbody id="tableBody">
-                        <!-- Initial static data -->
+                        <!-- Default static row -->
                         <tr>
                             <td><strong>Priya S.</strong> (MB-0042)</td>
                             <td>22 weeks</td>
                             <td><span class="status-badge status-high">High Risk</span></td>
-                            <td>21 Oct 2025</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </section>
+
+        <!-- DYNAMIC RISK SECTION (Hidden until form is submitted) -->
+        <section class="risk-section" id="riskAnalysisSection">
+            <h3>What Changed the Risk?</h3>
+            <p style="font-size: 13px; color: var(--text-light); margin-bottom: 15px;">AI has detected a multimodal pattern for <strong id="analyzedPatientName"></strong>.</p>
+            
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <div style="background: var(--bg-color); padding: 10px; border-radius: 8px; flex: 1; text-align: center;">
+                    <i class="fa-solid fa-flask" style="color: var(--primary-pink);"></i><br><small>Lab: <span id="riskLab"></span></small>
+                </div>
+                <div style="background: var(--bg-color); padding: 10px; border-radius: 8px; flex: 1; text-align: center;">
+                    <i class="fa-solid fa-baby" style="color: var(--primary-pink);"></i><br><small>Ultrasound: <span id="riskUltrasound"></span></small>
+                </div>
+            </div>
+
+            <div class="combined-pattern">
+                <i class="fa-solid fa-triangle-exclamation"></i> Combined Pattern Detected: Immediate Referral Recommended
+            </div>
+        </section>
     </main>
 
-    <!-- NEW INTERACTIVE MODAL -->
+    <!-- POPUP FORM -->
     <div class="modal-overlay" id="uploadModal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2>New Patient Assessment</h2>
-                <button class="close-btn" onclick="closeModal()">&times;</button>
-            </div>
-            <!-- This form calls the addPatient JavaScript function -->
-            <form id="patientForm" onsubmit="addPatient(event)">
+            <h2 style="margin-bottom: 20px; color: var(--primary-pink);">New Patient Assessment</h2>
+            <!-- THIS FORM NOW TRIGGERS THE JAVASCRIPT -->
+            <form onsubmit="processPatient(event)">
                 <div class="form-group">
                     <label>Patient Name</label>
-                    <input type="text" id="inputName" placeholder="e.g. Kavya M." required>
+                    <input type="text" id="inputName" placeholder="e.g. Anjali R." required>
                 </div>
                 <div class="form-group">
-                    <label>Gestational Age (weeks)</label>
-                    <input type="number" id="inputAge" placeholder="e.g. 16" required>
+                    <label>Gestational Age (Weeks)</label>
+                    <input type="number" id="inputAge" placeholder="e.g. 28" required>
                 </div>
                 <div class="form-group">
-                    <label>Risk Level</label>
-                    <select id="inputRisk" required>
-                        <option value="Low">Low Risk</option>
-                        <option value="High">High Risk (Requires Review)</option>
-                    </select>
+                    <label>Blood Pressure (Systolic)</label>
+                    <input type="number" id="inputBP" placeholder="e.g. 140" required>
                 </div>
-                <button type="submit" class="btn-submit">Save Patient Record</button>
+                <div class="form-group">
+                    <label>Platelet Count (x10^9/L)</label>
+                    <input type="number" id="inputPlatelets" placeholder="e.g. 90" required>
+                </div>
+                <button type="submit" class="btn-submit">Run AI Analysis & Save</button>
             </form>
         </div>
     </div>
 
-    <!-- JAVASCRIPT TO MAKE IT WORK -->
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        const modal = document.getElementById('uploadModal');
-
         function openModal() {
-            modal.classList.add('active');
-            document.getElementById('inputName').focus();
+            document.getElementById('uploadModal').classList.add('active');
         }
 
         function closeModal() {
-            modal.classList.remove('active');
-            document.getElementById('patientForm').reset(); // Clear form
+            document.getElementById('uploadModal').classList.remove('active');
         }
 
-        // This function takes the form data and adds a new row to the table!
-        function addPatient(event) {
-            event.preventDefault(); // Stop page from reloading
+        function processPatient(event) {
+            event.preventDefault(); // Stop page reload
             
-            // Get values from the form
+            // Get the values typed into the form
             const name = document.getElementById('inputName').value;
             const age = document.getElementById('inputAge').value;
-            const risk = document.getElementById('inputRisk').value;
-            const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+            const bp = parseInt(document.getElementById('inputBP').value);
+            const platelets = parseInt(document.getElementById('inputPlatelets').value);
 
-            // Create the HTML for the new table row
+            // Simple AI logic simulation: If BP is high and platelets are low -> High Risk
+            let isHighRisk = false;
+            let labText = "Normal";
+            let ultraText = "Normal";
+
+            if (bp > 130 && platelets < 100) {
+                isHighRisk = true;
+                labText = "Low Platelets (" + platelets + ")";
+                ultraText = "Elevated resistance";
+            }
+
+            // 1. Add to the table
             const tableBody = document.getElementById('tableBody');
             const newRow = document.createElement('tr');
-            
-            const riskClass = risk === 'High' ? 'status-high' : 'status-low';
+            const riskClass = isHighRisk ? 'status-high' : 'status-low';
+            const riskLabel = isHighRisk ? 'High Risk' : 'Low Risk';
 
             newRow.innerHTML = `
                 <td><strong>${name}</strong> (New)</td>
                 <td>${age} weeks</td>
-                <td><span class="status-badge ${riskClass}">${risk} Risk</span></td>
-                <td>${today}</td>
+                <td><span class="status-badge ${riskClass}">${riskLabel}</span></td>
             `;
+            tableBody.prepend(newRow);
 
-            // Add the new row to the table
-            tableBody.prepend(newRow); // Adds to the top
-            
-            // Close the modal
+            // 2. Show the Dynamic Risk Analysis at the bottom!
+            if (isHighRisk) {
+                document.getElementById('analyzedPatientName').innerText = name;
+                document.getElementById('riskLab').innerText = labText;
+                document.getElementById('riskUltrasound').innerText = ultraText;
+                
+                // Show the section with a nice animation
+                const riskSection = document.getElementById('riskAnalysisSection');
+                riskSection.style.display = 'block';
+                riskSection.scrollIntoView({ behavior: 'smooth' }); // Scroll down to show it
+            } else {
+                alert("Patient saved. AI analysis indicates low risk.");
+            }
+
             closeModal();
-            
-            // Show a success message
-            alert(`Success: ${name} has been added to the database.`);
         }
-
-        // Close modal when clicking outside
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) closeModal();
-        });
     </script>
 </body>
 </html>
